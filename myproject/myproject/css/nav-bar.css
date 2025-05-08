@@ -1,0 +1,267 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  background-color: #f5f7fa;
+}
+
+/* Sidebar Styles */
+nav {
+  width: 250px;
+  background: #1f2937;
+  color: #fff;
+  height: 100vh;
+  padding: 30px 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+nav .logo {
+  margin-bottom: 30px;
+  font-size: 22px;
+  color: #60a5fa;
+}
+
+.nav-links {
+  list-style: none;
+}
+
+.nav-links li {
+  margin: 20px 0;
+  position: relative; /* Needed for dropdown */
+}
+
+.nav-links li a {
+  color: #d1d5db;
+  text-decoration: none;
+  font-size: 16px;
+  display: block;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: background 0.3s, color 0.3s;
+}
+
+.nav-links li a:hover,
+.nav-links li a.active {
+  background: #3b82f6;
+  color: white;
+}
+
+/* DROPDOWN */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  left: 0;
+  top: 100%;
+  background-color: #374151;
+  padding: 10px 0;
+  border-radius: 8px;
+  width: 220px;
+  z-index: 1000;
+}
+
+.dropdown-content li a {
+  font-size: 14px;
+  padding: 10px 15px;
+  color: #d1d5db;
+  background-color: #374151;
+}
+
+.dropdown-content li a:hover {
+  background-color: #3b82f6;
+  color: white;
+}
+
+/* Show dropdown on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Content Area */
+.content {
+  margin-left: 270px;
+  padding: 40px;
+  width: calc(100% - 270px);
+}
+
+.section {
+  display: none;
+  animation: fadeIn 0.3s ease-in;
+}
+
+.section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/*-----------------TOP NAV BAR-----------------------------*/
+/* Top Navbar */
+.top-navbar {
+  height: 60px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0 30px;
+  position: fixed;
+  left: 250px; /* width of sidebar */
+  right: 0;
+  top: 0;
+  z-index: 1000;
+}
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #3B82F6;
+}
+
+
+.admin-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.logout-btn {
+  background-color: #3B82F6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #2563eb;
+}
+
+/* Adjust main content because of Top Navbar */
+.content {
+  margin-left: 270px;
+  margin-top: 80px; /* Add top margin for the header */
+  padding: 40px;
+  width: calc(100% - 270px);
+}
+
+/* Profile Dropdown */
+.profile-dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #ffffff;
+  min-width: 150px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 1001;
+  flex-direction: column;
+}
+
+.dropdown-menu a {
+  padding: 12px 20px;
+  display: block;
+  text-decoration: none;
+  color: #374151;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f3f4f6;
+}
+
+.show {
+  display: flex;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.card-icon {
+  font-size: 40px;
+  margin-bottom: 15px;
+}
+
+.card-content h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #374151;
+}
+
+.card-content p {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1d4ed8;
+  margin-bottom: 10px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+}
+
+.badge.pending {
+  background-color: #f59e0b; /* Amber */
+}
+
+.badge.active {
+  background-color: #10b981; /* Emerald */
+}
+
+.badge.available {
+  background-color: #3b82f6; /* Blue */
+}
+
+.badge.warning {
+  background-color: #ef4444; /* Red */
+}

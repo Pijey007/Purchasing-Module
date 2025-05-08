@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Issuance Form</title>
+  <link rel="stylesheet" href="issuance-style.css">
+</head>
+<style>
+    body {
+  font-family: Arial, sans-serif;
+  background: #f6f8fa;
+  padding: 20px;
+}
+
+.container {
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  max-width: 900px;
+  margin: auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+h2, h3 {
+  margin-bottom: 15px;
+}
+
+.form-row {
+  margin-bottom: 15px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+}
+
+table th, table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+}
+
+button {
+  padding: 8px 16px;
+  background-color: #007BFF;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button.remove-row {
+  background-color: #dc3545;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+</style>
+<body>
+  <div class="container">
+    <h2>Issuance Form</h2>
+
+    <form id="issuanceForm">
+      <div class="form-row">
+        <label for="issuanceDate">Issuance Date:</label>
+        <input type="date" id="issuanceDate" name="issuanceDate" required>
+      </div>
+
+      <div class="form-row">
+        <label for="issuedTo">Issued To:</label>
+        <input type="text" id="issuedTo" name="issuedTo" placeholder="Department or Employee" required>
+      </div>
+
+      <div class="form-row">
+        <label for="purpose">Purpose:</label>
+        <input type="text" id="purpose" name="purpose" required>
+      </div>
+
+      <h3>Items to Issue</h3>
+      <table id="itemsTable">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Current Stock</th>
+            <th>Quantity to Issue</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="itemsBody">
+          <tr>
+            <td>
+              <select name="item[]" class="item-select" required>
+                <option value="">-- Select Item --</option>
+                <option value="ITEM001" data-stock="25">Screwdriver</option>
+                <option value="ITEM002" data-stock="10">Hammer</option>
+                <option value="ITEM003" data-stock="50">Wrench</option>
+              </select>
+            </td>
+            <td><input type="text" class="stock" readonly></td>
+            <td><input type="number" name="quantity[]" min="1" required></td>
+            <td><button type="button" class="remove-row">Remove</button></td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="button" id="addItem">Add Item</button>
+
+      <div class="form-row">
+        <button type="submit">Submit Issuance</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+  const itemsBody = document.getElementById('itemsBody');
+  const addItemBtn = document.getElementById('addItem');
+
+  function updateStockSelect(row) {
+    const select = row.querySelector('.item-select');
+    const stockField = row.querySelector('.stock');
+    select.addEventListener('change', () => {
+      const selected = select.options[select.selectedIndex];
+      const stock = selected.dataset.stock || '';
+      stockField.value = stock;
+    });
+  }
+
+  updateStockSelect(itemsBody.querySelector('tr'));
+
+  addItemBtn.addEventListener('click', () => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>
+        <select name="item[]" class="item-select" required>
+          <option value="">-- Select Item --</option>
+          <option value="ITEM001" data-stock="25">Screwdriver</option>
+          <option value="ITEM002" data-stock="10">Hammer</option>
+          <option value="ITEM003" data-stock="50">Wrench</option>
+        </select>
+      </td>
+      <td><input type="text" class="stock" readonly></td>
+      <td><input type="number" name="quantity[]" min="1" required></td>
+      <td><button type="button" class="remove-row">Remove</button></td>
+    `;
+    itemsBody.appendChild(row);
+    updateStockSelect(row);
+  });
+
+  itemsBody.addEventListener('click', (e) => {
+    if (e.target.classList.contains('remove-row')) {
+      e.target.closest('tr').remove();
+    }
+  });
+
+  document.getElementById('issuanceForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Issuance submitted!');
+    // Here you would send the data to your backend using fetch/ajax
+  });
+});
+
+  </script>
+</body>
+</html>

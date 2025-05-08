@@ -1,0 +1,65 @@
+function updateCompanyHeader() {
+    const companySelect = document.getElementById("company")
+    const selectedCompany = companySelect.options[companySelect.selectedIndex].text;
+    document.getElementById("companyNameDisplay").textContent = selectedCompany;
+}
+function updateCompanyTitle() {
+    const selectedCompany = document.getElementById("companySelect").value;
+    document.getElementById("companyTitle").textContent = selectedCompany;
+}
+
+let rowCount = 0;
+
+function addRow() {
+rowCount++;
+const table = document.getElementById("tableBody");
+const row = document.createElement("tr");
+
+row.innerHTML = `
+    <td>${rowCount}</td>
+    <td><input type="text" name="item[]"></td>
+    <td><input type="text" name="code[]"></td>
+    <td><input type="text" name="description[]"></td>
+    <td><input type="number" name="quantity[]" min="0" oninput="preventNegative(this); updateTotalPrice(this)"></td>
+    <td><input type="text" name="description[]"></td>
+    <td><input type="number" name="unit_price[]" min="0" oninput="preventNegative(this); updateTotalPrice(this)"></td>
+    <td><input type="text" name="total_price[]" readonly></td>
+    <td><button type="button" onclick="removeRow(this)">Delete</button></td>
+`;
+
+table.appendChild(row);
+}
+
+
+function preventNegative(input) {
+    if (parseFloat(input.value) < 0) input.value = 0;
+}
+
+function updateTotalPrice(input) {
+    const row = input.closest('tr');
+    const qty = parseFloat(row.querySelector('[name="quantity[]"]').value) || 0;
+    const unit = parseFloat(row.querySelector('[name="unit_price[]"]').value) || 0;
+    row.querySelector('[name="total_price[]"]').value = (qty * unit).toFixed(2);
+    calculateGrandTotal();
+}
+
+function calculateGrandTotal() {
+    let total = 0;
+    document.querySelectorAll('[name="total_price[]"]').forEach(input => {
+        total += parseFloat(input.value) || 0;
+    });
+    document.getElementById("grandTotal").value = total.toFixed(2);
+}
+
+function removeRow(btn) {
+    btn.closest('tr').remove();
+    rowCount--;
+    recalculateRowNumbers();
+    calculateGrandTotal();
+}
+
+function recalculateRowNumbers() {
+    document.querySelectorAll("#tableBody tr").forEach((row, i) => {
+        row.children[0].textContent = i + 1;
+    });
+}

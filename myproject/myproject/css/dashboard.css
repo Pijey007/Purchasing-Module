@@ -1,0 +1,72 @@
+body {
+    background-color: #f9fafb;
+}
+.content {
+    margin-top: 80px; /* push down below top bar */
+    margin-left: 270px;
+    padding: 40px;
+    width: calc(100% - 270px);
+}
+
+h1 {
+    font-size: 28px;
+    color: #1f2937;
+    margin-bottom: 30px;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h2 {
+    font-size: 18px;
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 36px;
+    color: #3b82f6;
+    font-weight: bold;
+}
+
+/*---------------
+/* Basic dropdown styles */
+
+.dropdown-content1 {
+    display: none;
+    position: absolute;
+    min-width: 200px;
+    z-index: 1;
+}
+
+.dropdown:hover > .dropdown-content1,
+.dropdown-submenu:hover > .dropdown-content1 {
+    display: block;
+}
+
+.dropdown-content1 li {
+    position: relative;
+}
+
+/* Submenu alignment */
+.dropdown-submenu .dropdown-content1 {
+    left: 100%;
+    top: 0;
+    margin-left: -1px;
+}
